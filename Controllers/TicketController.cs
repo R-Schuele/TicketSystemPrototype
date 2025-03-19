@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using TicketSystemPrototype.Data;
 using TicketSystemPrototype.Objects;
 
 namespace TicketSystemPrototype.Controllers
@@ -7,89 +9,70 @@ namespace TicketSystemPrototype.Controllers
     [ApiController]
     public class TicketController : ControllerBase
     {
-        static private List<Ticket> tickets = new List<Ticket>
-        {
-            new Ticket
-            {
-                Id = 1,
-                Name = "Issue01",
-                Description = "Test Ticket",
-                CreatedBy = "Robin",
-                AssingedTo = "Robin",
-                CreatedAt = DateTime.Now,
-                Priority = TicketPriority.Low,
-                Status = TicketStatus.Open
-            },
-            new Ticket
-            {
-                Id = 2,
-                Name = "Issue02",
-                Description = "Test Ticket",
-                CreatedBy = "Robin",
-                AssingedTo = "Robin",
-                CreatedAt = DateTime.Now,
-                Priority = TicketPriority.Low,
-                Status = TicketStatus.Open
-            }
-        };
+        private readonly TicketDbContext _ticketDbContext;
 
-        [HttpGet]
-        public ActionResult<List<Ticket>> GetTickets()
+        public TicketController(TicketDbContext ticketDbContext)
         {
-            return Ok(tickets);
+            _ticketDbContext = ticketDbContext;
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public ActionResult<Ticket> GetTicketById(int id)
-        {
-            var ticket = tickets.FirstOrDefault(ticket => ticket.Id == id);
-            if (ticket is null)
-            {
-                return NotFound();
-            }
+        //[HttpGet]
+        //public async Task<ActionResult<List<Ticket>>> GetTickets()
+        //{
+        //    return Ok(await _ticketDbContext.Tickets.ToListAsync());
+        //}
 
-            return Ok(ticket);
-        }
+        //[HttpGet]
+        //[Route("{id}")]
+        //public ActionResult<Ticket> GetTicketById(int id)
+        //{
+        //    var ticket = tickets.FirstOrDefault(ticket => ticket.Id == id);
+        //    if (ticket is null)
+        //    {
+        //        return NotFound();
+        //    }
 
-        [HttpPost]
-        public ActionResult<Ticket> AddTicket(Ticket newTicket)
-        {
-            if (newTicket is null)
-            {
-                return BadRequest();
-            }
+        //    return Ok(ticket);
+        //}
 
-            newTicket.Id = tickets.Max(ticket => ticket.Id) + 1;
-            tickets.Add(newTicket);
-            return CreatedAtAction(nameof(GetTicketById), new { id = newTicket.Id}, newTicket);
-        }
+        //[HttpPost]
+        //public ActionResult<Ticket> AddTicket(Ticket newTicket)
+        //{
+        //    if (newTicket is null)
+        //    {
+        //        return BadRequest();
+        //    }
 
-        [HttpPut("{id}")]
-        public IActionResult UpdateTicket(int id, Ticket updatedTicket)
-        {
-            var ticket = tickets.FirstOrDefault(ticket => ticket.Id == id);
-            if (ticket is null)
-            {
-                return NotFound();
-            }
+        //    newTicket.Id = tickets.Max(ticket => ticket.Id) + 1;
+        //    tickets.Add(newTicket);
+        //    return CreatedAtAction(nameof(GetTicketById), new { id = newTicket.Id}, newTicket);
+        //}
 
-            ticket = updatedTicket;
+        //[HttpPut("{id}")]
+        //public IActionResult UpdateTicket(int id, Ticket updatedTicket)
+        //{
+        //    var ticket = tickets.FirstOrDefault(ticket => ticket.Id == id);
+        //    if (ticket is null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return NoContent();
-        }
+        //    ticket = updatedTicket;
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteTicket (int id)
-        {
-            var ticket = tickets.FirstOrDefault(ticket => ticket.Id == id);
-            if (ticket is null)
-            {
-                return NotFound();
-            }
+        //    return NoContent();
+        //}
 
-            tickets.Remove(ticket);
-            return NoContent();
-        }
+        //[HttpDelete("{id}")]
+        //public IActionResult DeleteTicket (int id)
+        //{
+        //    var ticket = tickets.FirstOrDefault(ticket => ticket.Id == id);
+        //    if (ticket is null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    tickets.Remove(ticket);
+        //    return NoContent();
+        //}
     }
 }
