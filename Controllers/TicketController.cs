@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using TicketSystemPrototype.Data;
 using TicketSystemPrototype.Objects;
 
@@ -16,63 +17,69 @@ namespace TicketSystemPrototype.Controllers
             _ticketDbContext = ticketDbContext;
         }
 
-        //[HttpGet]
-        //public async Task<ActionResult<List<Ticket>>> GetTickets()
-        //{
-        //    return Ok(await _ticketDbContext.Tickets.ToListAsync());
-        //}
+        [HttpGet]
+        public async Task<ActionResult<List<Ticket>>> GetTickets()
+        {
+            return Ok(await _ticketDbContext.Tickets.ToListAsync());
+        }
 
-        //[HttpGet]
-        //[Route("{id}")]
-        //public ActionResult<Ticket> GetTicketById(int id)
-        //{
-        //    var ticket = tickets.FirstOrDefault(ticket => ticket.Id == id);
-        //    if (ticket is null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ActionResult<Ticket>> GetTicketById(int id)
+        {
+            var ticket = await _ticketDbContext.Tickets.FindAsync(id);
+            if (ticket is null)
+            {
+                return NotFound();
+            }
 
-        //    return Ok(ticket);
-        //}
+            return Ok(ticket);
+        }
 
-        //[HttpPost]
-        //public ActionResult<Ticket> AddTicket(Ticket newTicket)
-        //{
-        //    if (newTicket is null)
-        //    {
-        //        return BadRequest();
-        //    }
+        [HttpPost]
+        public async Task<ActionResult<Ticket>> AddTicket(Ticket newTicket)
+        {
+            if (newTicket is null)
+            {
+                return BadRequest();
+            }
 
-        //    newTicket.Id = tickets.Max(ticket => ticket.Id) + 1;
-        //    tickets.Add(newTicket);
-        //    return CreatedAtAction(nameof(GetTicketById), new { id = newTicket.Id}, newTicket);
-        //}
+            _ticketDbContext.Tickets.Add(newTicket);
+            await _ticketDbContext.SaveChangesAsync();
 
-        //[HttpPut("{id}")]
-        //public IActionResult UpdateTicket(int id, Ticket updatedTicket)
-        //{
-        //    var ticket = tickets.FirstOrDefault(ticket => ticket.Id == id);
-        //    if (ticket is null)
-        //    {
-        //        return NotFound();
-        //    }
+            return CreatedAtAction(nameof(GetTicketById), new { id = newTicket.Id }, newTicket);
+        }
 
-        //    ticket = updatedTicket;
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateTicket(int id, Ticket updatedTicket)
+        {
+            var ticket = await _ticketDbContext.Tickets.FindAsync(id);
+            if (ticket is null)
+            {
+                return NotFound();
+            }
 
-        //    return NoContent();
-        //}
+            ticket = updatedTicket;
 
-        //[HttpDelete("{id}")]
-        //public IActionResult DeleteTicket (int id)
-        //{
-        //    var ticket = tickets.FirstOrDefault(ticket => ticket.Id == id);
-        //    if (ticket is null)
-        //    {
-        //        return NotFound();
-        //    }
+            await _ticketDbContext.SaveChangesAsync();
 
-        //    tickets.Remove(ticket);
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTicket(int id)
+        {
+            var ticket = await _ticketDbContext.Tickets.FindAsync(id);
+            if (ticket is null)
+            {
+                return NotFound();
+            }
+
+            _ticketDbContext.Tickets.Remove(ticket);
+            
+            await _ticketDbContext.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
