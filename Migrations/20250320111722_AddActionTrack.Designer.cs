@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TicketSystemPrototype.Data;
 
@@ -10,9 +11,11 @@ using TicketSystemPrototype.Data;
 namespace TicketSystemPrototype.Migrations
 {
     [DbContext(typeof(TicketDbContext))]
-    partial class TicketDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250320111722_AddActionTrack")]
+    partial class AddActionTrack
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.3");
@@ -41,7 +44,7 @@ namespace TicketSystemPrototype.Migrations
 
                     b.HasIndex("TicketId");
 
-                    b.ToTable("ActionTracks", (string)null);
+                    b.ToTable("ActionTracks");
                 });
 
             modelBuilder.Entity("TicketSystemPrototype.Objects.Ticket", b =>
@@ -50,7 +53,7 @@ namespace TicketSystemPrototype.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("AssignedTo")
+                    b.Property<string>("AssingedTo")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
@@ -75,14 +78,14 @@ namespace TicketSystemPrototype.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tickets", (string)null);
+                    b.ToTable("Tickets");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            AssignedTo = "Robin",
-                            CreatedAt = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AssingedTo = "Robin",
+                            CreatedAt = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Local),
                             CreatedBy = "Robin",
                             Description = "Read Tutorials and make a project",
                             Name = "Learn Blazor",
@@ -92,8 +95,8 @@ namespace TicketSystemPrototype.Migrations
                         new
                         {
                             Id = 2,
-                            AssignedTo = "Robin",
-                            CreatedAt = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AssingedTo = "Robin",
+                            CreatedAt = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Local),
                             CreatedBy = "Robin",
                             Description = "Download EFCore NuGet Package and configure",
                             Name = "Implement Entity Framework Core",
@@ -103,8 +106,8 @@ namespace TicketSystemPrototype.Migrations
                         new
                         {
                             Id = 3,
-                            AssignedTo = "Robin",
-                            CreatedAt = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AssingedTo = "Robin",
+                            CreatedAt = new DateTime(2025, 3, 20, 0, 0, 0, 0, DateTimeKind.Local),
                             CreatedBy = "Robin",
                             Description = "Download SQLite Browser and open generated Datebase file",
                             Name = "Implement SQLite Database with SQLite Browser",

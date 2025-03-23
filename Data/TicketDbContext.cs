@@ -12,10 +12,17 @@ namespace TicketSystemPrototype.Data
         }
 
         public DbSet<Ticket> Tickets {  get; set; }
+        public DbSet<ActionTrack> ActionTracks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ActionTrack>()
+                .HasOne<Ticket>()
+                .WithMany(t => t.ActionTracks)
+                .HasForeignKey(a => a.TicketId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Ticket>().HasData(
                 new Ticket
@@ -24,8 +31,8 @@ namespace TicketSystemPrototype.Data
                     Name = "Learn Blazor",
                     Description = "Read Tutorials and make a project",
                     CreatedBy = "Robin",
-                    AssingedTo = "Robin",
-                    CreatedAt = DateTime.Now.Date,
+                    AssignedTo = "Robin",
+                    CreatedAt = new DateTime(2025, 3, 20),
                     Priority = TicketPriority.High,
                     Status = TicketStatus.InProgress
                 },
@@ -35,8 +42,8 @@ namespace TicketSystemPrototype.Data
                     Name = "Implement Entity Framework Core",
                     Description = "Download EFCore NuGet Package and configure",
                     CreatedBy = "Robin",
-                    AssingedTo = "Robin",
-                    CreatedAt = DateTime.Now.Date,
+                    AssignedTo = "Robin",
+                    CreatedAt = new DateTime(2025, 3, 20),
                     Priority = TicketPriority.Medium,
                     Status = TicketStatus.Done
                 },
@@ -46,8 +53,8 @@ namespace TicketSystemPrototype.Data
                     Name = "Implement SQLite Database with SQLite Browser",
                     Description = "Download SQLite Browser and open generated Datebase file",
                     CreatedBy = "Robin",
-                    AssingedTo = "Robin",
-                    CreatedAt = DateTime.Now.Date,
+                    AssignedTo = "Robin",
+                    CreatedAt = new DateTime(2025, 3, 20),
                     Priority = TicketPriority.Medium,
                     Status = TicketStatus.Open
                 }

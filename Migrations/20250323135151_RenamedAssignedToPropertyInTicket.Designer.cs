@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TicketSystemPrototype.Data;
 
@@ -10,9 +11,11 @@ using TicketSystemPrototype.Data;
 namespace TicketSystemPrototype.Migrations
 {
     [DbContext(typeof(TicketDbContext))]
-    partial class TicketDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250323135151_RenamedAssignedToPropertyInTicket")]
+    partial class RenamedAssignedToPropertyInTicket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.3");
@@ -41,7 +44,7 @@ namespace TicketSystemPrototype.Migrations
 
                     b.HasIndex("TicketId");
 
-                    b.ToTable("ActionTracks", (string)null);
+                    b.ToTable("ActionTracks");
                 });
 
             modelBuilder.Entity("TicketSystemPrototype.Objects.Ticket", b =>
@@ -75,7 +78,7 @@ namespace TicketSystemPrototype.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tickets", (string)null);
+                    b.ToTable("Tickets");
 
                     b.HasData(
                         new

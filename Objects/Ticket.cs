@@ -10,12 +10,14 @@
 
         public required string CreatedBy { get; set; }
 
-        public string? AssingedTo { get; set; }
+        public string? AssignedTo { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
         public TicketPriority Priority { get; set; }
 
         public TicketStatus Status { get; set; }
+
+        public List<ActionTrack> ActionTracks { get; set; } = new List<ActionTrack>();
     }
 }
