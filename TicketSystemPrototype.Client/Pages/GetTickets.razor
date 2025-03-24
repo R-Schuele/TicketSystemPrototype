@@ -1,0 +1,53 @@
+﻿@using TicketSystemPrototype.Shared.Models
+
+@page "/gettickets"
+@inject HttpClient Http
+
+<h3>Get Tickets</h3>
+
+<button class="btn btn-primary" @onclick="FetchTickets">Get</button>
+
+@if (tickets == null) 
+{
+    <p><em>Could not find any Tickets...</em></p>
+}
+else 
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Created By</th>
+                <th>Assigned To</th>
+                <th>Created At</th>
+                <th>Priority</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ticket in tickets)
+            {
+                <tr>
+                    <td>@ticket.Name</td>
+                    <td>@ticket.Description</td>
+                    <td>@ticket.CreatedBy</td>
+                    <td>@ticket.AssignedTo</td>
+                    <td>@ticket.CreatedAt</td>
+                    <td>@ticket.Priority</td>
+                    <td>@ticket.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    public List<Ticket>? tickets;    
+
+    private async Task FetchTickets()
+    {
+        tickets = await Http.GetFromJsonAsync<List<Ticket>>("api/ticket");
+    }
+}
+

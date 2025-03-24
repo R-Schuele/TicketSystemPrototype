@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TicketSystemPrototype.API.Objects;
+using TicketSystemPrototype.Shared.Models;
 
 namespace TicketSystemPrototype.API.Data
 {

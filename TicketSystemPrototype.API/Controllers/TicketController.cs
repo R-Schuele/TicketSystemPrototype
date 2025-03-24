@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TicketSystemPrototype.API.Data;
-using TicketSystemPrototype.API.Objects;
+using TicketSystemPrototype.Shared.Models;
 
 namespace TicketSystemPrototype.API.Controllers
 {

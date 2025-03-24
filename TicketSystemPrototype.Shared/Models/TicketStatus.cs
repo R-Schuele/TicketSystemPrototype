@@ -1,4 +1,4 @@
-﻿namespace TicketSystemPrototype.API.Objects
+﻿namespace TicketSystemPrototype.Shared.Models
 {
     public enum TicketStatus
     {
